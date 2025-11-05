@@ -80,7 +80,7 @@ body {
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.677 0.0499 56.24);            /* text-accent*/
-  --accent-foreground: oklch(0.677 0.0499 56.24); 
+  --accent-foreground: oklch(93.197% 0.01441 50.53);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.677 0.0499 56.24);            /* border-light*/
   --input: oklch(0.922 0 0);
@@ -110,7 +110,7 @@ body {
   --border-light: oklch(0.38 0.02 80);           
   --border-dark: oklch(0.25 0.015 70);   
 
-  --background: oklch(0.2 0.015 80);                /* background-body */
+  --background: oklch(33.368% 0.02306 77.819);                /* background-body */
   --foreground: oklch(0.28 0.02 70);                 /* background-container */
   --card: oklch(0.15 0.01 70 / 80%);                    /* background-backdrop */
   --card-foreground: oklch(0.985 0 0);

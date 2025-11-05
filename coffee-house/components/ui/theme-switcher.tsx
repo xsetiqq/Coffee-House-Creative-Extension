@@ -38,16 +38,16 @@ export function ModeToggle() {
       size="icon"
       onClick={nextTheme}
       aria-label="Toggle theme"
-      className=""
+      className="cursor-pointer border-ring"
     >
       {current === "light" && (
-        <Sun className="h-[1.2rem] w-[1.2rem] text-accent-foreground" />
+        <Sun className="h-[1.2rem] w-[1.2rem] text-primary " />
       )}
       {current === "dark" && (
-        <Moon className="h-[1.2rem] w-[1.2rem] text-accent-foreground" />
+        <Moon className="h-[1.2rem] w-[1.2rem] text-primary " />
       )}
       {current === "system" && (
-        <MonitorCog className="h-[1.2rem] w-[1.2rem] text-accent-foreground" />
+        <MonitorCog className="h-[1.2rem] w-[1.2rem] text-primary " />
       )}
     </Button>
   );
