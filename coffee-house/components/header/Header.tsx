@@ -6,6 +6,7 @@ import { ModeToggle } from "../ui/theme-switcher";
 import { ShoppingCart } from "lucide-react";
 
 import UserMenu from "./usermenu/Usermenu";
+import { MobileMenu } from "./mobile-menu";
 
 
 
@@ -73,6 +74,9 @@ function Header() {
             <p>Cart</p>
           </div>
         </Link>
+      </div>
+      <div className="md:hidden">
+        <MobileMenu />
       </div>
     </header>
   );

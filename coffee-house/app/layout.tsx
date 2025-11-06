@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <AppProviders>
           <Header />
-          <main className="flex bg-background mx-auto max-w-[1440px] items-center justify-center px-4 md:px-10 py-5">
+          <main className="flex bg-background mx-auto max-w-[1440px] items-center justify-center px-4 md:px-10 pb-5">
             {children}
           </main>
           <Footer />
