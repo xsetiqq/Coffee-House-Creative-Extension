@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AppProviders from "@/components/providers/AppProviders";
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
           <main className="flex bg-background mx-auto max-w-[1440px] items-center justify-center px-4 md:px-10 py-5">
             {children}
           </main>
+          <Footer />
         </AppProviders>
       </body>
     </html>

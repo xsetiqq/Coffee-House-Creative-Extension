@@ -8,6 +8,7 @@ export function QueryProvider({ children }: React.PropsWithChildren) {
     new QueryClient({
       defaultOptions: {
         queries: {
+          retry: 0,
           staleTime: 1 * (60 * 1000), // 1 mins
           gcTime: 1 * (60 * 1000), // 1 mins
         },
