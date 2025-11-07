@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { ModeToggle } from "../ui/theme-switcher";
 import { Clock3, MapPin, Phone } from "lucide-react";
+import { motion } from 'framer-motion';
 
 
 
@@ -15,12 +16,30 @@ function Footer() {
       <div className="flex xl:gap-25 gap-10 sm:gap-15 max-w-[1360px] w-full bg-foreground px-4 py-15 xl:p-25 rounded-[40px] md:flex-row flex-col items-center ">
         <div className="flex max-w-[530px] w-full flex-col gap-10">
           <div>
-            <h2 className="text-secondary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold md:text-start sm:text-center text-start">
+            <motion.h2
+              initial={{ opacity: 0, scale: 0.95, x: -50 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.5,
+              }}
+              viewport={{ once: true }}
+              className="text-secondary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold md:text-start sm:text-center text-start"
+            >
               Sip, Savor, Smile.
-            </h2>
-            <h2 className="text-accent xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold md:text-start sm:text-center text-start">
+            </motion.h2>
+            <motion.h2
+              initial={{ opacity: 0, scale: 0.95, x: 50 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.7,
+              }}
+              viewport={{ once: true }}
+              className="text-accent xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold md:text-start sm:text-center text-start"
+            >
               <i>It’s coffee time!</i>
-            </h2>
+            </motion.h2>
           </div>
           <div className="flex gap-3 w-full sm:justify-center md:justify-start justify-start ">
             <Link

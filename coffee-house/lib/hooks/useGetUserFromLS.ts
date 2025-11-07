@@ -15,9 +15,7 @@ export function useUser() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Инициализация при монтировании
   useEffect(() => {
-    // Проверяем, что мы на клиенте
     if (typeof window === "undefined") {
       setIsLoading(false);
       return;
@@ -28,15 +26,18 @@ export function useUser() {
       if (userData) {
         const parsedUser: UserProfile = JSON.parse(userData);
         setUser(parsedUser);
+      } else {
+        setUser(null);
       }
     } catch (error) {
       console.error("Error loading user data:", error);
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Слушаем изменения в localStorage
+  // listen to storage events 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -51,6 +52,7 @@ export function useUser() {
           }
         } catch (error) {
           console.error("Error parsing updated user data:", error);
+          setUser(null);
         }
       }
     };
@@ -59,19 +61,58 @@ export function useUser() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const onAuthChange = (e: Event) => {
+      const ce = e as CustomEvent<{ user: UserProfile | null }>;
+      if (ce?.detail && "user" in ce.detail) {
+        setUser(ce.detail.user ?? null);
+        return;
+      }
+
+      
+      try {
+        const raw = localStorage.getItem("userProfile");
+        setUser(raw ? JSON.parse(raw) : null);
+      } catch {
+        setUser(null);
+      }
+    };
+
+    window.addEventListener("auth:change", onAuthChange as EventListener);
+    return () =>
+      window.removeEventListener("auth:change", onAuthChange as EventListener);
+  }, []);
+
   const logout = useCallback(() => {
     if (typeof window === "undefined") return;
 
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userProfile");
-    setUser(null);
+    try {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("userProfile");
+      setUser(null);
+      window.dispatchEvent(
+        new CustomEvent("auth:change", { detail: { user: null } })
+      );
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   }, []);
 
   const login = useCallback((userData: UserProfile) => {
     if (typeof window === "undefined") return;
 
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    setUser(userData);
+    try {
+      localStorage.setItem("userProfile", JSON.stringify(userData));
+      setUser(userData);
+      window.dispatchEvent(
+        new CustomEvent("auth:change", { detail: { user: userData } })
+      );
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   }, []);
 
   const updateUser = useCallback(
@@ -79,9 +120,16 @@ export function useUser() {
       if (typeof window === "undefined") return;
 
       if (user) {
-        const updatedUser = { ...user, ...updates };
-        localStorage.setItem("userProfile", JSON.stringify(updatedUser));
-        setUser(updatedUser);
+        try {
+          const updatedUser = { ...user, ...updates };
+          localStorage.setItem("userProfile", JSON.stringify(updatedUser));
+          setUser(updatedUser);
+          window.dispatchEvent(
+            new CustomEvent("auth:change", { detail: { user: updatedUser } })
+          );
+        } catch (error) {
+          console.error("Update user error:", error);
+        }
       }
     },
     [user]

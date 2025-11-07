@@ -72,7 +72,7 @@ export default function UserMenu() {
               User Profile
             </h2>
 
-            {/* Основная информация */}
+           
             <div className="mb-4 p-4 bg-muted rounded-lg">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
@@ -85,7 +85,7 @@ export default function UserMenu() {
               </div>
             </div>
 
-            {/* Детальная информация */}
+         
             <div className="space-y-3 mb-6">
               {userAddress && (
                 <div className="flex items-start gap-2 text-sm">
@@ -109,7 +109,7 @@ export default function UserMenu() {
               )}
             </div>
 
-            {/* Кнопки действий */}
+           
             <div className="space-y-2">
               <button
                 className="w-full py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 transition flex items-center justify-center gap-2"
