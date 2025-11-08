@@ -20,7 +20,7 @@ export default function Home() {
 const [allLoadedInAbout, setAllLoadedInAbout] = useState(false);
 const [allLoadedInMobile, setAllLoadedInMobile] = useState(false);
  
-if (allLoadedInAbout && allLoadedInMobile) {
+if (allLoadedInAbout && allLoadedInMobile ) {
   console.log(allLoadedInAbout);
 }
 

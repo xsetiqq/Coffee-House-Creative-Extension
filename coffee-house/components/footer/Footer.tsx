@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 
 function Footer() {
   return (
-    <footer className="relative flex   mx-4 sm:mx-12  items-center justify-center mb-10 ">
+    <footer id="contact" className="relative flex   mx-4 sm:mx-12  items-center justify-center mb-10 ">
       <div className="flex xl:gap-25 gap-10 sm:gap-15 max-w-[1360px] w-full bg-foreground px-4 py-15 xl:p-25 rounded-[40px] md:flex-row flex-col items-center ">
         <div className="flex max-w-[530px] w-full flex-col gap-10">
           <div>

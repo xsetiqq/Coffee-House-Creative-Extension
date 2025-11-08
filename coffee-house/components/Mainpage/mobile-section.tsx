@@ -10,7 +10,7 @@ type AboutSectionProps = {
   onAllImagesLoaded?: () => void;
 };
 export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) {
-   const totalImages = 1;
+   const totalImages = 3;
    const [loadedCount, setLoadedCount] = useState(0);
 
    const handleImageLoad = () => {
@@ -52,7 +52,7 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
             ordering your favorite coffee from wherever you are
           </motion.h2>
 
-          <div className="flex gap-4 w-full sm:flex-row flex-col justify-center lg:justify-start">
+          <div className="flex gap-4 w-full sm:flex-row flex-col justify-center lg:justify-start pl-2">
             <motion.div
               whileHover={{ scale: 1.05, y: -3 }}
               transition={{ type: "spring", stiffness: 250 }}
@@ -68,6 +68,7 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
                   width={32}
                   height={32}
                   onLoad={handleImageLoad}
+                  priority={true}
                 />
                 <div className="font-semibold text-primary">
                   <p className="text-sm">Avaliable on the</p>
@@ -89,6 +90,7 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
                   alt={"Couple"}
                   width={32}
                   height={32}
+                  priority={true}
                   onLoad={handleImageLoad}
                 />
                 <div className="font-semibold text-primary ">
@@ -127,6 +129,7 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
                 alt={"Couple"}
                 width={630}
                 height={630}
+                priority={true}
                 onLoad={handleImageLoad}
                 className="rounded-xl  w-full h-full"
               />

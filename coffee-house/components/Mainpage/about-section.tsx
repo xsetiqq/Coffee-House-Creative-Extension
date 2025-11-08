@@ -54,6 +54,7 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               width={400}
               height={400}
               onLoad={handleImageLoad}
+              priority={true}
               className="rounded-xl object-cover w-full h-[590px]"
             />
           </motion.div>
@@ -70,6 +71,7 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               alt={"Man"}
               width={200}
               height={200}
+              priority={true}
               onLoad={handleImageLoad}
               className="hidden md:block rounded-xl object-cover w-full h-[430px]"
             />
@@ -88,6 +90,7 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               alt={"Coffee"}
               fill
               onLoad={handleImageLoad}
+              priority={true}
               className="hidden md:block rounded-xl w-full  h-[430px] object-cover"
             />
           </motion.div>
@@ -103,6 +106,7 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               alt={"Couple"}
               fill
               onLoad={handleImageLoad}
+              priority={true}
               className="rounded-xl object-cover w-full h-[590px]"
             />
           </motion.div>

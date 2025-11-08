@@ -84,7 +84,7 @@ export function MobileMenu() {
           ) : (
             <DrawerClose asChild>
               <button
-                onClick={() => setIsModalOpen(true)}
+                //onClick={() => setIsModalOpen(true)}
                 className="group flex items-center justify-between rounded-lg px-4 py-3 text-xl font-medium text-primary hover:bg-muted hover:text-foreground transition-all"
               >
                 Profile

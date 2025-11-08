@@ -49,6 +49,7 @@ export default function SliderSection(favorites: FavoritesProps) {
       }}
       viewport={{ once: true }}
       className="relative w-full max-w-[1360px] overflow-hidden mb-25 flex flex-col items-center"
+      id="favorite"
     >
       <h2 className="m-0 mb-10 font-inter leading-[1.06] text-primary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold text-center">
         Choose your<i className="text-accent"> favorite </i> coffee
