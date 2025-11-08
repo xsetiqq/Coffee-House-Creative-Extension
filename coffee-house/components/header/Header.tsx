@@ -25,7 +25,7 @@ function Header() {
 
         <nav className="hidden lg:flex gap-10 items-center text-md font-semibold text-primary">
           <Link
-            href="#favorite"
+            href="/#favorite"
             className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5
                  after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
           >
@@ -33,7 +33,7 @@ function Header() {
           </Link>
 
           <Link
-            href="#about"
+            href="/#about"
             className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5
                  after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
           >
@@ -41,7 +41,7 @@ function Header() {
           </Link>
 
           <Link
-            href="#mobile"
+            href="/#mobile"
             className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5
                  after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
           >
@@ -49,7 +49,7 @@ function Header() {
           </Link>
 
           <Link
-            href="#contact"
+            href="/#contact"
             className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5
                  after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
           >

@@ -17,7 +17,7 @@ function Footer() {
         <div className="flex max-w-[530px] w-full flex-col gap-10">
           <div>
             <motion.h2
-              initial={{ opacity: 0, scale: 0.95, x: -50 }}
+              initial={{ opacity: 0, scale: 0.95, x: -10 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{
                 duration: 0.6,
@@ -29,7 +29,7 @@ function Footer() {
               Sip, Savor, Smile.
             </motion.h2>
             <motion.h2
-              initial={{ opacity: 0, scale: 0.95, x: 50 }}
+              initial={{ opacity: 0, scale: 0.95, x: 10 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{
                 duration: 0.6,

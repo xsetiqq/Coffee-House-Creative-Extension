@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { Product, ProductsResponse } from "./api/products";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -32,3 +33,31 @@ export const formatPaymentMethod = (method: string) => {
     ? "Credit Card"
     : method.charAt(0).toUpperCase() + method.slice(1);
 };
+
+export function sortByCategory(products: ProductsResponse) {
+  const categories: {
+    coffee: Product[];
+    tea: Product[];
+    dessert: Product[];
+  } = {
+    coffee: [],
+    tea: [],
+    dessert: [],
+  };
+
+  products.data.forEach((item: Product) => {
+    const category = item.category?.toLowerCase();
+
+    if (category === "coffee") {
+      categories.coffee.push(item);
+    } else if (category === "tea") {
+      categories.tea.push(item);
+    } else if (category === "dessert") {
+      categories.dessert.push(item);
+    } else {
+      categories.dessert.push(item);
+    }
+  });
+
+  return categories;
+}
