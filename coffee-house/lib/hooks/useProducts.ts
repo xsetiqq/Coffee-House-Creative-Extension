@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as products from "../api/products";
+import { AxiosError } from "axios";
 
 
 
@@ -26,3 +27,13 @@ export const useGetProductById = (id: number) => {
   });
 };
 
+export const useConfirmOrder = (body?: products.ConfirmOrderRequest) => {
+  return useMutation<
+    products.ConfirmOrderResponse,
+    AxiosError<{ error?: string }>,
+    products.ConfirmOrderRequest
+  >({
+    mutationKey: ["ConfirmOrder"],
+    mutationFn: async (body) => await products.confirmOrder(body),
+  });
+};

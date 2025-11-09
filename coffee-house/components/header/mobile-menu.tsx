@@ -122,16 +122,20 @@ export function MobileMenu() {
               </DrawerClose>
             )}
 
-            <DrawerClose asChild className="border-y pt-5 pb-5 border-ring">
-              <div className="flex justify-between items-center">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="group flex items-center justify-between rounded-lg px-4 py-3 text-xl font-medium text-primary hover:bg-muted hover:text-foreground transition-all"
-                >
-                  Profile
-                </button>
-              </div>
-            </DrawerClose>
+            {isLoading || !user ? (
+             <></>
+            ) : (
+              <DrawerClose asChild className="border-y pt-5 pb-5 border-ring">
+                <div className="flex justify-between items-center">
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="group flex w-full items-center justify-between rounded-lg px-4 py-3 text-xl font-medium text-primary hover:bg-muted hover:text-foreground transition-all"
+                  >
+                    Profile
+                  </button>
+                </div>
+              </DrawerClose>
+            )}
           </nav>
 
           <div className="mt-auto px-6 py-6 flex justify-center">

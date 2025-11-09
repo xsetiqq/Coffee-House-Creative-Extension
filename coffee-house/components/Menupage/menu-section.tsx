@@ -35,13 +35,13 @@ export default function MenuSection({ products }: MenuSectionProps) {
               onClick={() => handleOpen(product.id)}
               className="group cursor-pointer border border-ring rounded-4xl bg-background hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
             >
-              <div className="relative w-full">
+              <div className="relative w-full aspect-square h-fit">
                 <Image
                   src={`/images/${product.id}.jpg`}
                   alt={product.name}
                   width={800}
                   height={600}
-                  className="w-full h-auto object-cover rounded-4xl border-b border-ring transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-fit aspect-square object-cover rounded-4xl border-b border-ring transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 

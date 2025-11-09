@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import {
   Carousel,
@@ -12,7 +12,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { Product } from "@/lib/api/products";
 import { useIsLogged } from "@/lib/utils";
 import Image from "next/image";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 interface FavoritesProps {
@@ -39,7 +39,18 @@ export default function SliderSection(favorites: FavoritesProps) {
   }, [api]);
 
 
-  
+  const handleMouseEnter = () => {
+    if (api && api.plugins().autoplay) {
+      api.plugins().autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (api && api.plugins().autoplay) {
+      api.plugins().autoplay.play();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 50 }}
@@ -51,6 +62,8 @@ export default function SliderSection(favorites: FavoritesProps) {
       viewport={{ once: true }}
       className="relative w-full max-w-[1360px] overflow-hidden mb-25 flex flex-col items-center"
       id="favorite"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <h2 className="m-0 mb-10 font-inter leading-[1.06] text-primary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold text-center">
         Choose your<i className="text-accent"> favorite </i> coffee
@@ -68,7 +81,7 @@ export default function SliderSection(favorites: FavoritesProps) {
         <CarouselContent>
           {favorites.favorites.map((favorite) => (
             <CarouselItem key={favorite.id}>
-              <Link href={'/menu'} className="p-1">
+              <Link href={"/menu"} className="p-1">
                 <div className="flex items-center justify-center">
                   <Image
                     src={`/images/${favorite.id}.jpg`}
@@ -129,6 +142,3 @@ export default function SliderSection(favorites: FavoritesProps) {
     </motion.div>
   );
 }
-
-
-

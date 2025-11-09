@@ -1,11 +1,16 @@
 "use client";
 import { useCart } from "@/lib/hooks/useCart";
 import Image from "next/image";
-import { Trash2, Plus, Minus,  ChevronLast, Trash } from "lucide-react";
-import { toast } from "sonner"; 
-import { motion } from 'framer-motion';
-import {  useIsLogged } from "@/lib/utils";
+import { Trash2, Plus, Minus, ChevronLast, Trash } from "lucide-react";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { useIsLogged } from "@/lib/utils";
 import Link from "next/link";
+import { useUser } from "@/lib/hooks/useGetUserFromLS";
+import { useConfirmOrder } from "@/lib/hooks/useProducts";
+import { AxiosError } from "axios";
+import { ConfirmOrderRequest, SizeKey } from "@/lib/api/products";
+import { Loader } from './../../components/ui/loader';
 
 export default function CartPanel() {
   const {
@@ -20,7 +25,14 @@ export default function CartPanel() {
     hasItems,
   } = useCart();
 
-  
+  const {
+    
+    userAddress,
+    userPaymentMethod,
+   
+  } = useUser();
+
+  const { mutate: confirmOrder, isPending: isConfirming } = useConfirmOrder();
 
   const handleIncrease = (itemIndex: number) => {
     const item = cart[itemIndex];
@@ -36,7 +48,7 @@ export default function CartPanel() {
     const item = cart[itemIndex];
     const next = item.count - 1;
     if (item.count === 1) {
-      return
+      return;
     }
     if (next <= 0) {
       removeFromCart(item.productId, item.sizeKey, item.additives);
@@ -52,24 +64,56 @@ export default function CartPanel() {
     toast?.success?.("Item removed from cart");
   };
 
-
-
   const handleClear = () => {
     clearCart();
     toast?.success?.("Cart cleared");
   };
 
+  const handleCheckout = () => {
+    if (!hasItems) {
+      toast.error("Cart is empty");
+      return;
+    }
+
+  
+    const orderData: ConfirmOrderRequest = {
+      items: cart.map((item) => ({
+        productId: item.productId,
+        size: item.sizeKey as SizeKey, 
+        additives: item.additives,
+        quantity: item.count,
+      })),
+      totalPrice: totalPrice,
+    };
+
+    confirmOrder(orderData, {
+      onSuccess: (response) => {
+        if (response.data?.message && response.data?.orderId){
+           toast.success(
+             `${response.data?.message}! We will contact you soon! Your orderID${response.data?.orderId}`
+           );
+        } else {
+           toast.success("We will contact you soon!");
+        }
+         
+        clearCart(); 
+      },
+      onError: (error: AxiosError<{ error?: string }>) => {
+        const message =
+          error?.response?.data?.error ||
+          error?.message ||
+          "Failed to place order. Please try again.";
+        toast.error(message);
+      },
+    });
+  };
 
   const isLogin = useIsLogged();
 
   if (isLoading) {
     return (
       <div className="p-6 w-full max-w-[760px] mx-auto">
-        <div className="animate-pulse space-y-3">
-          <div className="h-6 bg-muted rounded w-1/3" />
-          <div className="h-4 bg-muted rounded w-full" />
-          <div className="h-4 bg-muted rounded w-full" />
-        </div>
+       <Loader/>
       </div>
     );
   }
@@ -91,7 +135,7 @@ export default function CartPanel() {
       </div>
 
       {cart.length === 0 ? (
-        <div className="py-12 text-center text-muted-foreground">
+        <div className="py-12 text-center text-muted-foreground h-60">
           <p className="mb-2">Your cart is empty</p>
           <p className="text-sm">Add some items to see them here.</p>
         </div>
@@ -168,8 +212,38 @@ export default function CartPanel() {
               </div>
             </div>
           ))}
+          {isLogin && (
+            <>
+              <div className="flex items-center justify-between  mt-10 border-ring dark:border-muted-foreground">
+                <div>
+                  <div className="text-xl font-semibold text-primary">
+                    Address:
+                  </div>
+                </div>
 
-          <div className="flex items-center justify-between py-4 border-t mt-10 border-ring dark:border-muted-foreground">
+                <div className="text-right">
+                  <div className="text-xl font-semibold text-primary">
+                    {userAddress}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between border-ring dark:border-muted-foreground">
+                <div>
+                  <div className="text-xl font-semibold text-primary">
+                    Pay by:
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <div className="text-xl font-semibold text-primary">
+                    {userPaymentMethod === "card" ? "Card" : "Cash"}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div className="flex items-center justify-between py-4 border-t mt-5 border-ring dark:border-muted-foreground">
             <div>
               <div className="text-xl font-semibold text-primary">Items:</div>
               <div className="text-2xl font-semibold text-primary">
@@ -192,10 +266,20 @@ export default function CartPanel() {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-100 py-3 bg-foreground cursor-pointer dark:border-primary/50 text-secondary rounded-xl font-semibold text-lg hover:bg-foreground/90 transition-colors flex items-center justify-center gap-3"
-                onClick={() => toast?.success?.("Checkout coming soon")}
+                className="w-100 py-3 bg-foreground cursor-pointer dark:border-primary/50 text-secondary rounded-xl font-semibold text-lg hover:bg-foreground/90 transition-colors flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleCheckout}
+                disabled={!hasItems || isConfirming}
               >
-                Checkout <ChevronLast />
+                {isConfirming ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    Checkout <ChevronLast />
+                  </>
+                )}
               </motion.button>
             </div>
           ) : (
