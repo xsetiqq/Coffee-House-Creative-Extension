@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Product } from "@/lib/api/products";
-import { isLogged } from "@/lib/utils";
+import { useIsLogged } from "@/lib/utils";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ModalDialog from "../ui/ModalDialog";
+import ProductModal from "./product-modal";
 
 interface MenuSectionProps {
   products: Product[];
@@ -13,8 +14,8 @@ interface MenuSectionProps {
 export default function MenuSection({ products }: MenuSectionProps) {
   const [openModal, setOpenModal] = useState(false);
   const [openModalID, setOpenModalID] = useState<number | undefined>(undefined);
-  const isLogin = isLogged();
-  console.log(products)
+  const isLogin = useIsLogged();
+ 
   const handleOpen = (id: number) => {
     setOpenModal(true);
     setOpenModalID(id)
@@ -28,7 +29,7 @@ export default function MenuSection({ products }: MenuSectionProps) {
           {products.map((product, index) => (
             <motion.div
               key={product.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * index }}
               onClick={() => handleOpen(product.id)}
@@ -88,7 +89,9 @@ export default function MenuSection({ products }: MenuSectionProps) {
         setOpenModal={setOpenModal}
         className="sm:max-w-4xl dark:bg-background text-primary border border-ring"
       >
-        {openModalID}
+        {openModalID && (
+          <ProductModal modalId={openModalID} setOpenModal={setOpenModal} />
+        )}
       </ModalDialog>
     </>
   );

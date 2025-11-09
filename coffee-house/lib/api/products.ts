@@ -97,3 +97,16 @@ export interface ConfirmOrderResponse {
   };
   message?: string;
 }
+
+export interface CartItem {
+  productId: number;
+  name: string;
+  category: string;
+  additives: string[];
+  count: number;
+  img: string;
+  sizeKey: string;
+  sizeLabel: string;
+  unitBasePrice: number;
+  unitFinalPrice: number;
+}

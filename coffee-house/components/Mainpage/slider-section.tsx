@@ -10,15 +10,16 @@ import {
 } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Product } from "@/lib/api/products";
-import { isLogged } from "@/lib/utils";
+import { useIsLogged } from "@/lib/utils";
 import Image from "next/image";
 import { motion } from 'framer-motion';
+import Link from "next/link";
 
 interface FavoritesProps {
   favorites: Product[];
 }
 export default function SliderSection(favorites: FavoritesProps) {
-  const isLogin = isLogged();
+  const isLogin = useIsLogged();
 
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
@@ -67,7 +68,7 @@ export default function SliderSection(favorites: FavoritesProps) {
         <CarouselContent>
           {favorites.favorites.map((favorite) => (
             <CarouselItem key={favorite.id}>
-              <div className="p-1">
+              <Link href={'/menu'} className="p-1">
                 <div className="flex items-center justify-center">
                   <Image
                     src={`/images/${favorite.id}.jpg`}
@@ -101,7 +102,7 @@ export default function SliderSection(favorites: FavoritesProps) {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>

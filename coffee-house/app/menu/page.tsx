@@ -1,19 +1,17 @@
 "use client";
-import SliderSection from "@/components/Mainpage/slider-section";
-import AboutSection from "@/components/Mainpage/about-section";
-import VideoSection from "@/components/Mainpage/video-section";
+
 import { FullScreenLoader } from "@/components/ui/FullScreenLoader";
-import { useGetFavorites, useGetProducts } from "@/lib/hooks/useProducts";
-import React, { useEffect, useMemo, useState } from "react";
+import { useGetProducts } from "@/lib/hooks/useProducts";
+import { useState } from "react";
 
 import MenuSection from "@/components/Menupage/menu-section";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ChevronRight } from "lucide-react";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Product, ProductsResponse } from "@/lib/api/products";
+
 import { sortByCategory } from "@/lib/utils";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { data: products, isLoading, isError } = useGetProducts();
@@ -23,7 +21,7 @@ export default function Home() {
     ? sortByCategory(products)
     : { coffee: [], tea: [], dessert: [] };
 
-  console.log(categorizedProducts.coffee);
+ 
 
   return (
     <div className="flex font-sans relative w-full flex-col">

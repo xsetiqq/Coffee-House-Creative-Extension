@@ -1,12 +1,17 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { Product, ProductsResponse } from "./api/products";
+import { useUser } from "./hooks/useGetUserFromLS";
+
+
+
+export function useIsLogged(): boolean {
+  const { user } = useUser();
+  return !!user;
+}
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-export function isLogged(): boolean {
-  return !!localStorage.getItem("authToken");
+  return twMerge(clsx(inputs));
 }
 
 export function getCartCount(): number {

@@ -16,6 +16,8 @@ import ModalDialog from "../ui/ModalDialog";
 import { motion } from 'framer-motion';
 import { formatDate, formatPaymentMethod } from "@/lib/utils";
 import { useState } from "react";
+import { useCart } from "@/lib/hooks/useCart";
+import { toast } from "sonner";
 
 export function MobileMenu() {
     const {
@@ -28,6 +30,7 @@ export function MobileMenu() {
         userCreatedAt,
       } = useUser();
       const [isModalOpen, setIsModalOpen] = useState(false);
+      const { totalItems } = useCart();
   return (
     <>
       <Drawer direction="right">
@@ -103,14 +106,14 @@ export function MobileMenu() {
             ) : (
               <DrawerClose asChild className="border-t pt-5 pb-2 border-ring">
                 <Link
-                  href={"/"}
+                  href={"/cart"}
                   className="relative text-md font-semibold text-primary flex gap-2 items-center pl-4
                  after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5
                  after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full "
                 >
                   <div>
                     <div className="bg-primary rounded-full text-background text-sm flex items-center justify-center">
-                      0
+                      {totalItems}
                     </div>
                     <p>Cart</p>
                   </div>
@@ -175,7 +178,7 @@ export function MobileMenu() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="flex flex-col gap-4">
-                <div className="p-4 bg-muted rounded-lg flex items-start gap-3">
+                <div className="p-4 bg-background rounded-lg flex items-start gap-3">
                   <div className="w-12 h-12 rounded-lg bg-primary/5 flex items-center justify-center">
                     <User className="w-5 h-5 text-primary" />
                   </div>
@@ -205,7 +208,7 @@ export function MobileMenu() {
                   </motion.button>
 
                   <motion.button
-                    onClick={() => alert("Feature coming soon")}
+                    onClick={() => toast.warning("Feature coming soon :)")}
                     whileHover={{ translateY: -3, scale: 1.01 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 border border-input hover:shadow-sm transition"
@@ -219,7 +222,7 @@ export function MobileMenu() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-background">
                   <MapPin className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-xs text-muted-foreground">Address</p>
@@ -227,7 +230,7 @@ export function MobileMenu() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-background">
                   <CreditCard className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-xs text-muted-foreground">Payment</p>
@@ -239,7 +242,7 @@ export function MobileMenu() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-background ">
                   <Calendar className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-xs text-muted-foreground">

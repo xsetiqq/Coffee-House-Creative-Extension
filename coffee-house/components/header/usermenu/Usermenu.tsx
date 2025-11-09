@@ -6,6 +6,7 @@ import { User, MapPin, CreditCard, Calendar, LogOut } from "lucide-react";
 import Link from "next/link";
 import  { useState } from "react";
 import { motion } from 'framer-motion';
+import { toast } from "sonner";
 
 
 export default function UserMenu() {
@@ -97,7 +98,7 @@ export default function UserMenu() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="flex flex-col gap-4">
-                <div className="p-4 bg-muted rounded-lg flex items-start gap-3">
+                <div className="p-4 bg-background rounded-lg flex items-start gap-3">
                   <div className="w-12 h-12 rounded-lg bg-primary/5 flex items-center justify-center">
                     <User className="w-5 h-5 text-primary" />
                   </div>
@@ -127,7 +128,7 @@ export default function UserMenu() {
                   </motion.button>
 
                   <motion.button
-                    onClick={() => alert("Feature coming soon")}
+                    onClick={() => toast.warning("Feature coming soon :)")}
                     whileHover={{ translateY: -3, scale: 1.01 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 border border-input hover:shadow-sm transition"
@@ -141,7 +142,7 @@ export default function UserMenu() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-background">
                   <MapPin className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-xs text-muted-foreground">Address</p>
@@ -149,7 +150,7 @@ export default function UserMenu() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-background">
                   <CreditCard className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-xs text-muted-foreground">Payment</p>
@@ -161,7 +162,7 @@ export default function UserMenu() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-muted">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-background ">
                   <Calendar className="w-5 h-5 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-xs text-muted-foreground">

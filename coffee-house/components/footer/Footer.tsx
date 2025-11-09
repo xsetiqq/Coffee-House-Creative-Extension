@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { ModeToggle } from "../ui/theme-switcher";
+
+
 import { Clock3, MapPin, Phone } from "lucide-react";
 import { motion } from 'framer-motion';
 

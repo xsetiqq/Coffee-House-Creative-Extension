@@ -25,14 +25,6 @@ if (allLoadedInAbout && allLoadedInMobile ) {
 }
 
 
- const [isLoaded, setIsLoaded] = useState(false);
- useEffect(() => {
-   const timer = setTimeout(() => {
-     setIsLoaded(true);
-   }, 2000); 
-
-   return () => clearTimeout(timer);
- }, []);
 
   return (
     <div className="flex font-sans relative w-full flex-col">
