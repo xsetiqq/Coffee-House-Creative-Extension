@@ -1,28 +1,8 @@
-
 "use client";
-import React, {  useEffect, useState  } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-type AboutSectionProps = {
-  onAllImagesLoaded?: () => void;
-};
-export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
-   const totalImages = 4;
-   const [loadedCount, setLoadedCount] = useState(0);
-
-   const handleImageLoad = () => {
-     setLoadedCount((prev) => prev + 1);
-   };
-
-   useEffect(() => {
-     if (loadedCount === totalImages) {
-       const t = setTimeout(() => {
-         onAllImagesLoaded?.();
-       }, 0);
-       return () => clearTimeout(t);
-     }
-   }, [loadedCount, totalImages, onAllImagesLoaded]);
+export default function AboutSection() {
   return (
     <div
       className="relative w-full max-w-[1360px] overflow-hidden mb-25 flex flex-col items-center"
@@ -53,7 +33,6 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               alt={"Girl"}
               width={400}
               height={400}
-              onLoad={handleImageLoad}
               priority={true}
               className="rounded-xl object-cover w-full h-[590px]"
             />
@@ -72,7 +51,6 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               width={200}
               height={200}
               priority={true}
-              onLoad={handleImageLoad}
               className="hidden md:block rounded-xl object-cover w-full h-[430px]"
             />
           </motion.div>
@@ -89,7 +67,6 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               src={"/about/about-3.jpg"}
               alt={"Coffee"}
               fill
-              onLoad={handleImageLoad}
               priority={true}
               className="hidden md:block rounded-xl w-full  h-[430px] object-cover"
             />
@@ -105,7 +82,6 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
               src={"/about/about-4.jpg"}
               alt={"Couple"}
               fill
-              onLoad={handleImageLoad}
               priority={true}
               className="rounded-xl object-cover w-full h-[590px]"
             />
@@ -115,6 +91,3 @@ export default function AboutSection({ onAllImagesLoaded }: AboutSectionProps) {
     </div>
   );
 }
-
-
-

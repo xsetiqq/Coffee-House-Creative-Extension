@@ -1,30 +1,11 @@
-
 "use client";
-import React, {  useEffect, useState  } from "react";
+
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "../ui/button";
+
 import Link from "next/link";
 
-type AboutSectionProps = {
-  onAllImagesLoaded?: () => void;
-};
-export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) {
-   const totalImages = 3;
-   const [loadedCount, setLoadedCount] = useState(0);
-
-   const handleImageLoad = () => {
-     setLoadedCount((prev) => prev + 1);
-   };
-
-   useEffect(() => {
-     if (loadedCount === totalImages) {
-       const t = setTimeout(() => {
-         onAllImagesLoaded?.();
-       }, 0);
-       return () => clearTimeout(t);
-     }
-   }, [loadedCount, totalImages, onAllImagesLoaded]);
+export default function MobileSection() {
   return (
     <div
       className="relative w-full max-w-[1360px] overflow-hidden mb-25 flex flex-col items-center"
@@ -67,7 +48,6 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
                   alt={"Couple"}
                   width={32}
                   height={32}
-                  onLoad={handleImageLoad}
                   priority={true}
                 />
                 <div className="font-semibold text-primary">
@@ -91,7 +71,6 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
                   width={32}
                   height={32}
                   priority={true}
-                  onLoad={handleImageLoad}
                 />
                 <div className="font-semibold text-primary ">
                   <p className="text-sm">Get it on</p>
@@ -130,7 +109,6 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
                 width={630}
                 height={630}
                 priority={true}
-                onLoad={handleImageLoad}
                 className="rounded-xl  w-full h-full"
               />
             </motion.div>
@@ -140,6 +118,3 @@ export default function MobileSection({ onAllImagesLoaded }: AboutSectionProps) 
     </div>
   );
 }
-
-
-

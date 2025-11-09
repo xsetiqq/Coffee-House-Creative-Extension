@@ -4,10 +4,6 @@ import AboutSection from "@/components/Mainpage/about-section";
 import VideoSection from "@/components/Mainpage/video-section";
 import { FullScreenLoader } from "@/components/ui/FullScreenLoader";
 import { useGetFavorites } from "@/lib/hooks/useProducts";
-import { Coffee } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from 'react'
 import MobileSection from "@/components/Mainpage/mobile-section";
 
 export default function Home() {
@@ -16,13 +12,6 @@ export default function Home() {
     isLoading,
     isError,
   } = useGetFavorites();
-
-const [allLoadedInAbout, setAllLoadedInAbout] = useState(false);
-const [allLoadedInMobile, setAllLoadedInMobile] = useState(false);
- 
-if (allLoadedInAbout && allLoadedInMobile ) {
-  console.log(allLoadedInAbout);
-}
 
 
 
@@ -40,8 +29,8 @@ if (allLoadedInAbout && allLoadedInMobile ) {
           </p>
         </div>
       )}
-      <AboutSection onAllImagesLoaded={() => setAllLoadedInAbout(true)} />
-      <MobileSection onAllImagesLoaded={() => setAllLoadedInMobile(true)} />
+      <AboutSection />
+      <MobileSection />
     </div>
   );
 }
