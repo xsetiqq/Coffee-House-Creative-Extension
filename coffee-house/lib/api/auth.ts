@@ -54,3 +54,13 @@ export interface RegisterResponse {
   };
   message: string;
 }
+
+export interface ValidationErrorResponse {
+  message: string[];
+  error: string;
+  statusCode: number;
+}
+
+export interface ApiErrorResponse {
+  error?: ValidationErrorResponse;
+}

@@ -4,6 +4,7 @@ import "./globals.css";
 import AppProviders from "@/components/providers/AppProviders";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import { ScrollToTopButton } from "@/components/ui/scrollToTopButton";
 
 export const inter = Inter({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
           <Header />
           <main className="flex bg-background mx-auto max-w-[1440px] items-center justify-center px-4 md:px-10 pb-5">
             {children}
+            <ScrollToTopButton />
           </main>
           <Footer />
         </AppProviders>

@@ -3,10 +3,13 @@ import * as auth from "../api/auth";
 import { AxiosError } from "axios";
 
 export const useRegisterUser = () => {
-  return useMutation({
+  return useMutation<
+    auth.RegisterResponse,
+    AxiosError<{ error?: string }>,
+    auth.RegisterRequest
+  >({
     mutationKey: ["register"],
-    mutationFn: async (body: auth.RegisterRequest) =>
-      await auth.registerUser(body),
+    mutationFn: async (body) => await auth.registerUser(body),
   });
 };
 

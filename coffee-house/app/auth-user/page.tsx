@@ -21,7 +21,7 @@ export default function Page() {
    }
    
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-6">
+    <div className="flex w-full max-w-4xl flex-col gap-6">
       <Tabs value={tab} onValueChange={setTab} defaultValue="account">
         <TabsList className="block sm:hidden">
           <TabsTrigger value="SignIn">Sign In</TabsTrigger>
@@ -36,7 +36,7 @@ export default function Page() {
               ease: "backOut",
               delay: 0.2,
             }}
-            className="m-0 mb-10 font-inter  hidden sm:block leading-[1.06] text-primary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold text-center max-w-[800px]"
+            className="m-0 mb-10 font-inter  w-full hidden sm:block leading-[1.06] text-primary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold text-center "
           >
             Sign In
           </motion.h2>
@@ -65,7 +65,7 @@ export default function Page() {
               ease: "backOut",
               delay: 0.2,
             }}
-            className="m-0 mb-10 font-inter  hidden sm:block leading-[1.06] text-primary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold text-center max-w-[800px]"
+            className="m-0 mb-10 font-inter hidden sm:block leading-[1.06] text-primary xl:text-[60px] md:text-[55px] text-[40px] sm:text-[50px] font-semibold text-center "
           >
             Registration
           </motion.h2>

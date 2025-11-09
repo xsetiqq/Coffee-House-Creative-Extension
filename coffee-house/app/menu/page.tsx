@@ -112,7 +112,7 @@ export default function Home() {
           ) : (
             <div className="flex flex-col items-center justify-center w-full max-w-[1360px] mb-25">
               <p className="text-destructive text-lg mb-4 pt-30">
-                Fail to load favorite products at this time. Try to refresh the
+                Fail to load coffee products at this time. Try to refresh the
                 page.
               </p>
             </div>
@@ -124,8 +124,7 @@ export default function Home() {
           ) : (
             <div className="flex flex-col items-center justify-center w-full max-w-[1360px] mb-25">
               <p className="text-destructive text-lg mb-4 pt-30">
-                Fail to load favorite products at this time. Try to refresh the
-                page.
+                Fail to load tea products at this time. Try to refresh the page.
               </p>
             </div>
           )}
@@ -136,7 +135,7 @@ export default function Home() {
           ) : (
             <div className="flex flex-col items-center justify-center w-full max-w-[1360px] mb-25">
               <p className="text-destructive text-lg mb-4 pt-30">
-                Fail to load favorite products at this time. Try to refresh the
+                Fail to load dessert products at this time. Try to refresh the
                 page.
               </p>
             </div>

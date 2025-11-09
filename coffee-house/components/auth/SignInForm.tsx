@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -18,31 +17,15 @@ import { useLoginUser } from "@/lib/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import type { AxiosError } from "axios";
 import { LoaderCircle } from "lucide-react";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import { LoginFormValues, loginSchema } from "@/lib/validation/auth.schema";
 
-const schema = z.object({
-  login: z
-    .string()
-    .min(3, "Login must be at least 3 characters long")
-    .regex(/^[A-Za-z].*$/, "Login must start with a letter")
-    .regex(/^[A-Za-z]+$/, "Login can contain only English letters"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters long")
-    .regex(
-      /[^A-Za-z0-9]/,
-      "Password must contain at least one special character"
-    ),
-});
-
-type FormValues = z.infer<typeof schema>;
-
-export default function SignInForm() {
+export default function RegistrationForm() {
   const router = useRouter();
   const { mutate: loginUser, isPending } = useLoginUser();
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(schema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
@@ -51,7 +34,7 @@ export default function SignInForm() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: LoginFormValues) => {
     loginUser(data, {
       onSuccess: (response) => {
         localStorage.setItem("authToken", response.data.access_token);
@@ -80,15 +63,13 @@ export default function SignInForm() {
     handleSubmit,
     formState: { isValid, errors },
   } = form;
-
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.7,  }}
-      whileInView={{ opacity: 1, scale: 1,  }}
+      initial={{ opacity: 0, scale: 0.7 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 1,
         ease: "backOut",
-        
       }}
     >
       {" "}
