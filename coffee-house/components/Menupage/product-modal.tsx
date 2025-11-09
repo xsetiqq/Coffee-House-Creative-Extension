@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Check } from "lucide-react";
+import { ShoppingCart, Check, Minus, Plus } from "lucide-react";
 import { useGetProductById } from "@/lib/hooks/useProducts";
 import { Loader } from "../ui/loader";
 import Image from "next/image";
@@ -15,17 +15,13 @@ interface ProductModalProps {
   setOpenModal: (open: boolean) => void;
 }
 
-
-
 export default function ProductModal({
   modalId,
   setOpenModal,
 }: ProductModalProps) {
   const isLogin = useIsLogged();
   const { data: productData, isLoading, isError } = useGetProductById(modalId);
-
   const product = productData?.data;
-
 
   const getDefaultSize = () => {
     if (product?.sizes) {
@@ -37,7 +33,7 @@ export default function ProductModal({
 
   const [selectedSize, setSelectedSize] = useState<string>(getDefaultSize);
   const [selectedAdditives, setSelectedAdditives] = useState<number[]>([]);
-
+  const [quantity, setQuantity] = useState<number>(1); 
 
   const calculatePrices = useCallback(() => {
     if (!product || !selectedSize) return { basePrice: 0, totalPrice: 0 };
@@ -65,14 +61,30 @@ export default function ProductModal({
       }
     });
 
-    return {
-      basePrice: sizePrice + additivesBasePrice,
-      totalPrice: finalSizePrice + additivesFinalPrice,
-    };
-  }, [product, selectedSize, selectedAdditives, isLogin]);
+    const singleBasePrice = sizePrice + additivesBasePrice;
+    const singleTotalPrice = finalSizePrice + additivesFinalPrice;
 
- 
-  const { basePrice, totalPrice } = calculatePrices();
+    return {
+      basePrice: singleBasePrice * quantity, 
+      totalPrice: singleTotalPrice * quantity, 
+      singleBasePrice,
+      singleTotalPrice, 
+    };
+  }, [product, selectedSize, selectedAdditives, isLogin, quantity]); 
+
+  const { basePrice, totalPrice, singleBasePrice = 0, singleTotalPrice = 0 } =
+    calculatePrices();
+
+  
+  const handleIncreaseQuantity = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
 
   const handleAdditiveToggle = (index: number) => {
     setSelectedAdditives((prev) => {
@@ -96,10 +108,10 @@ export default function ProductModal({
 
   const addToCart = () => {
     if (!product) return;
-     if (!selectedSize) {
-       toast.error("Please select a size before adding to cart!");
-       return;
-     }
+    if (!selectedSize) {
+      toast.error("Please select a size before adding to cart!");
+      return;
+    }
 
     const size = product.sizes[selectedSize];
     const selectedAdditiveNames = product.additives
@@ -111,19 +123,18 @@ export default function ProductModal({
       name: product.name,
       category: product.category,
       additives: selectedAdditiveNames,
-      count: 1,
+      count: quantity, 
       img: `/images/${product.id}.jpg`,
       sizeKey: selectedSize,
       sizeLabel: size.size,
-      unitBasePrice: basePrice,
-      unitFinalPrice: totalPrice,
+      unitBasePrice: singleBasePrice, 
+      unitFinalPrice: singleTotalPrice, 
     };
 
     addItemToCart(cartItem);
     setOpenModal(false);
-    toast.success("Product added to cart!");
+    toast.success(`Added ${quantity} ${product.name} to cart!`);
   };
-
 
   if (isLoading) {
     return (
@@ -150,9 +161,6 @@ export default function ProductModal({
       }))
     : [];
 
-  
- 
-
   return (
     <div className="max-h-[90vh] overflow-y-auto">
       <motion.div
@@ -172,9 +180,42 @@ export default function ProductModal({
                 className="w-full h-auto max-h-[400px] object-cover rounded-2xl border border-ring"
               />
             </div>
+
+            <div className="mt-6 lg:mt-8 hidden lg:block">
+              <h3 className="font-semibold text-xl text-primary mb-4">
+                Quantity
+              </h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center  gap-2 rounded-lg border-2 border-ring px-4 py-3 dark:text-primary bg-background">
+                  <button
+                    aria-label="Decrease quantity"
+                    onClick={handleDecreaseQuantity}
+                    disabled={quantity <= 1}
+                    className="p-2 rounded hover:bg-muted transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+
+                  <div className="w-12 text-center text-xl font-semibold">
+                    {quantity}
+                  </div>
+
+                  <button
+                    aria-label="Increase quantity"
+                    onClick={handleIncreaseQuantity}
+                    className="p-2 rounded hover:bg-muted transition cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="text-sm text-muted-foreground">
+                  {quantity} item{quantity !== 1 ? "s" : ""}
+                </div>
+              </div>
+            </div>
           </div>
 
-         
           <div className="lg:w-3/5">
             <div className="mb-6">
               <h1 className="font-bold text-3xl text-primary mb-3">
@@ -228,7 +269,6 @@ export default function ProductModal({
               </div>
             )}
 
-         
             {product.additives && product.additives.length > 0 && (
               <div className="mb-6">
                 <h3 className="font-semibold text-xl text-primary mb-4">
@@ -288,25 +328,74 @@ export default function ProductModal({
                 </div>
               </div>
             )}
+            <div className="mt-6 lg:mt-8 block lg:hidden">
+              <h3 className="font-semibold text-xl text-primary mb-4">
+                Quantity
+              </h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center  gap-2 rounded-lg border-2 border-ring px-4 py-3 dark:text-primary bg-background">
+                  <button
+                    aria-label="Decrease quantity"
+                    onClick={handleDecreaseQuantity}
+                    disabled={quantity <= 1}
+                    className="p-2 rounded hover:bg-muted transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
 
-           
+                  <div className="w-12 text-center text-xl font-semibold">
+                    {quantity}
+                  </div>
+
+                  <button
+                    aria-label="Increase quantity"
+                    onClick={handleIncreaseQuantity}
+                    className="p-2 rounded hover:bg-muted transition cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="text-sm text-muted-foreground">
+                  {quantity} item{quantity !== 1 ? "s" : ""}
+                </div>
+              </div>
+            </div>
+
             <div className="border-t border-muted dark:border-primary pt-6 mt-6">
               <div className="flex items-center justify-between mb-4">
-                <span className="font-bold text-2xl text-primary">Total:</span>
+                <div>
+                  <span className="font-bold text-2xl text-primary">
+                    Total:
+                  </span>
+                  <div className="text-sm text-muted-foreground">
+                    {quantity} item{quantity !== 1 ? "s" : ""}
+                  </div>
+                </div>
                 <div className="text-right">
                   {isLogin && basePrice !== totalPrice ? (
-                    <div className="flex gap-2 items-center">
-                      <span className="font-bold text-2xl text-primary">
-                        ${totalPrice.toFixed(2)}
-                      </span>
-                      <div className="text-xl text-muted-foreground line-through">
-                        ${basePrice.toFixed(2)}
+                    <div className="flex flex-col items-end">
+                      <div className="flex gap-2 items-center">
+                        <span className="font-bold text-2xl text-primary">
+                          ${totalPrice.toFixed(2)}
+                        </span>
+                        <div className="text-xl text-muted-foreground line-through">
+                          ${basePrice.toFixed(2)}
+                        </div>
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        ${singleTotalPrice.toFixed(2)} each
                       </div>
                     </div>
                   ) : (
-                    <span className="font-bold text-2xl text-primary">
-                      ${totalPrice.toFixed(2)}
-                    </span>
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-2xl text-primary">
+                        ${totalPrice.toFixed(2)}
+                      </span>
+                      <div className="text-sm text-muted-foreground">
+                        ${singleTotalPrice.toFixed(2)} each
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -318,7 +407,7 @@ export default function ProductModal({
                 className="w-full py-4 bg-foreground cursor-pointer dark:border-primary/50 text-secondary rounded-xl font-semibold text-lg hover:bg-foreground/90 transition-colors flex items-center justify-center gap-3"
               >
                 <ShoppingCart className="w-5 h-5" />
-                Add to Cart
+                Add to Cart {quantity === 1 ? "" : `(${quantity})`}
               </motion.button>
             </div>
           </div>
