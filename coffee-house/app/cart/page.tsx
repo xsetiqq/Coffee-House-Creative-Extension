@@ -11,6 +11,7 @@ import { useConfirmOrder } from "@/lib/hooks/useProducts";
 import { AxiosError } from "axios";
 import { ConfirmOrderRequest, SizeKey } from "@/lib/api/products";
 import { Loader } from './../../components/ui/loader';
+import { FullScreenLoader } from "@/components/ui/FullScreenLoader";
 
 export default function CartPanel() {
   const {
@@ -113,7 +114,7 @@ export default function CartPanel() {
   if (isLoading) {
     return (
       <div className="p-6 w-full max-w-[760px] mx-auto">
-       <Loader/>
+        <FullScreenLoader />
       </div>
     );
   }
@@ -142,8 +143,11 @@ export default function CartPanel() {
       ) : (
         <div className="space-y-4">
           {cart.map((item, idx) => (
-            <div
+            <motion.div
               key={`${item.productId}-${item.sizeKey}-${idx}`}
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 * idx }}
               className="flex gap-4 items-start p-4 rounded-2xl border border-ring bg-background dark:border-muted-foreground "
             >
               <div className="w-24 h-24 rounded-lg overflow-hidden bg-muted sm:flex items-center justify-center hidden">
@@ -210,7 +214,7 @@ export default function CartPanel() {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
           {isLogin && (
             <>
